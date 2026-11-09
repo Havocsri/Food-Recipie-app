@@ -2,7 +2,7 @@ import { FaHome,  FaRegHeart, FaThLarge, FaSearch, } from "react-icons/fa";
 
 import logo from "../assets/logo.png";
 
-const Navbar = () => {
+const NavBar = () => {
   return (
     <nav className=" flex w-full max-w-8xl items-center justify-between bg-ink-900 px-6 py-3 shadow-2xl ">
       
@@ -57,4 +57,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavBar;
