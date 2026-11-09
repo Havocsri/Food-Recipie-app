@@ -48,7 +48,7 @@ const Categories = () => {
           {categories.map((category) => (
             <div
               key={category.name}
-              className="group cursor-pointer overflow-hidden rounded-xl bg-[#1B1712] transition duration-300 hover:-translate-y-2"
+              className="group cursor-pointer overflow-hidden rounded-xl bg-ink-900 transition duration-300 hover:-translate-y-2"
             >
 
               <img

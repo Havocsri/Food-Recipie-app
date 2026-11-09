@@ -1,7 +1,10 @@
-import Footer from "./Components/Footer"
-import HeroSection from "./Components/HeroSection"
+import Home from "./pages/Home"
 import NavBar from "./Components/NavBar"
-import DisplayFoods from "./Components/DisplayFoods"
+import { Route, Routes } from "react-router-dom"
+import Categories from "./pages/Catogories"
+import Footer from "./Components/Footer"
+
+
 
 
 function App() {
@@ -10,9 +13,15 @@ function App() {
   return (
     <>
       <NavBar />
-      <HeroSection />
-      <DisplayFoods/>
-      <Footer/>
+      <Routes>
+        {/* Home Page */}
+        <Route path="/" element={<Home />} />
+         <Route path="/categories" element={<Categories/>}  />
+
+       </Routes>
+
+         <Footer></Footer>
+       
      </>
   )
 }

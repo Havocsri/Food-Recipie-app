@@ -1,5 +1,5 @@
 import { FaHome,  FaRegHeart, FaThLarge, FaSearch, } from "react-icons/fa";
-
+import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 const NavBar = () => {
@@ -12,7 +12,7 @@ const NavBar = () => {
           className="h-12 w-25 object-contain"/>
         
 
-        <h1 className="whitespace-nowrap text-xl font-bold  mr-3  text-cream">
+        <h1 className="whitespace-nowrap text-xl font-bold  mr-3  shadow-2xl  hover:shadow-gold-500 text-cream">
           Recipe <span className="text-gold-500">Explorer</span>
         </h1>
       </div>
@@ -21,10 +21,10 @@ const NavBar = () => {
       <div className="flex items-center gap-10">
         
         {/* Home */}
-        <div className="flex gap-1 items-center font-bold text-muted transition  border-b-2 border-transparent cursor-pointer hover:border-cream hover:text-cream">
+        <Link to="/" className="flex gap-1 items-center font-bold text-cream transition cursor-pointer hover:bg-gold-400 px-3 py-1 rounded-full hover:text-ink-900">
           <FaHome />
           <span>Home</span>
-        </div>
+        </Link>
 
         {/* Search Bar */}
         <div className="flex items-center rounded-lg border border-gray-300 px-3 py-2 w-xl bg-cream  focus-within:shadow shadow-gray-300">
@@ -35,19 +35,19 @@ const NavBar = () => {
             placeholder="Search  recipes..."
                 className="w-40 flex-1 outline-none "
                   />
-                    <button className="ml-2 flex justify-end rounded-full bg-gold-400 px-5 py-1 text-sm font-medium text-ink-900 transition hover:bg-gold-500">
+                    <button className="ml-2 flex justify-end rounded-full bg-ink-900 px-5 py-1 text-sm font-medium text-gold-400 transition hover:bg-ink-700">
       Search
     </button>
         </div>
 
         {/* Categories */}
-        <div className="flex gap-1 items-center font-bold text-muted transition border-b-2 cursor-pointer border-transparent hover:border-cream hover:text-cream">
+        <Link to="/categories" className="flex gap-2 items-center font-bold text-cream transition cursor-pointer hover:bg-gold-400 px-3 py-1 rounded-full hover:text-ink-900 ">
           <FaThLarge />
-          <span>Categories</span>
-        </div>
+          <span >Categories</span>
+        </Link>
 
         {/* Favorites */}
-        <div className="flex gap-1 items-center font-bold text-muted transition border-b-2 border-transparent cursor-pointer hover:border-cream hover:text-cream">
+        <div className="flex gap-1 items-center font-bold text-cream transition  cursor-pointer hover:bg-gold-400 px-3 py-1 rounded-full hover:text-ink-900">
           < FaRegHeart />
           <span>Favorites</span>
         </div>

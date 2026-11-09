@@ -13,6 +13,25 @@ Recipe Explorer is a modern food recipe landing page built with React and Vite. 
 - Food image carousel
 - Clean styling using Tailwind CSS
 
+
+## Pages and Navigation
+
+- The Home page has a welcome section and food categories.
+- The Categories page shows food categories from TheMealDB.
+- Use the navigation bar to move between Home and Categories.
+- React Router handles page navigation.
+
+## Recent Updates
+
+- Added React Router to the project.
+- Added Home and Categories routes.
+- Added links for Home and Categories in the navigation bar.
+- Added a Categories page that loads category information from TheMealDB.
+- Added Beef, Chicken, Dessert, and Vegetarian cards to the Home page.
+- Updated the text on the Categories page.
+
+
+
 ## Tech Stack
 
 - React
