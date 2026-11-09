@@ -25,7 +25,7 @@ const HeroSection = () => {
 
   return (
     <>
-        <section id="home" className="p-10 flex min-h-125 w-100% max-w-8xl items-center justify-between overflow-hidden py-12 bg-ink-900">
+        <section  className="p-10 flex min-h-125 w-100% max-w-8xl items-center justify-between overflow-hidden py-12  bg-ink-900">
       
       {/* Left Side - Welcome Content */}
       <div className="w-1/2">
