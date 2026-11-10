@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, } from "react-router-dom";
-import { FaRegHeart,FaHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 const RecipePage = () => {
-  
+
   const { name } = useParams();
   const [recipes, setRecipes] = useState([]);
   const navigate = useNavigate();
   const [Favorite, setFavorite] = useState([]);
 
- 
+
   useEffect(() => {
     const getRecipes = async () => {
       const response = await fetch(
@@ -54,22 +54,22 @@ const RecipePage = () => {
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 
           {recipes.map((recipe) => (
-              <div     
+            <div
               key={recipe.idMeal}
               onClick={() => navigate(`/recipe/${recipe.idMeal}`)}
               className="  overflow-hidden rounded-xl bg-ink-900 transition duration-300 border border-ink-900 hover:border-gold-400 hover:-translate-y-1"
             >
-             <div className="relative">
-              {/* Recipe Image */}
-              <img
-                src={recipe.strMealThumb}
-                alt={recipe.strMeal}
-                className="h-48 w-full object-cover transition duration-300 group-hover:scale-103"
-              />
-                <button onClick={(event) => toggleFavorite(event, recipe.idMeal) }
+              <div className="relative">
+                {/* Recipe Image */}
+                <img
+                  src={recipe.strMealThumb}
+                  alt={recipe.strMeal}
+                  className="h-48 w-full object-cover transition duration-300 group-hover:scale-103"
+                />
+                <button onClick={(event) => toggleFavorite(event, recipe.idMeal)}
                   className="absolute right-3 top-3 rounded-full bg-cream cursor-pointer p-3 text-xl text-ink-900 shadow-lg" >
-                   {Favorite.includes(recipe.idMeal) ? (<FaHeart className="text-red-500" /> ) : (<FaRegHeart />)}
-               </button>
+                  {Favorite.includes(recipe.idMeal) ? (<FaHeart className="text-red-500" />) : (<FaRegHeart />)}
+                </button>
               </div>
 
 
@@ -79,7 +79,7 @@ const RecipePage = () => {
                   {recipe.strMeal}
                 </h2>
 
-            
+
               </div>
 
             </div>

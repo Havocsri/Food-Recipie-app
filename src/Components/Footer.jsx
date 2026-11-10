@@ -72,7 +72,7 @@ const Footer = () => {
 
         <div className="mx-auto flex max-w-7xl justify-center px-6 py-5 text-center text-sm text-muted">
 
-          © 2026 Recipe Explorer • Made for food lovers 
+          © 2026 Recipe Explorer • Made for food lovers
 
         </div>
 

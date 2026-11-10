@@ -60,20 +60,20 @@ const Categories = () => {
               />
 
               <h3 className="p-4 text-center flex justify-between text-lg font-semibold">
-                      {category.name}
-                        <span className="text-xl px-2 text-ink-900 bg-gold-500 rounded-full  py-1">
-                         < FaArrowRight/>
-                        </span>
-                  </h3>
-                  
-              </div>
-              
+                {category.name}
+                <span className="text-xl px-2 text-ink-900 bg-gold-500 rounded-full  py-1">
+                  < FaArrowRight />
+                </span>
+              </h3>
+
+            </div>
+
           ))}
-                 
+
         </div>
-                     <div className=' flex justify-center transition duration-300  hover:scale-97' >
-                      <Link to="/categories" className='flex gap-3 mt-15 px-5 py-1 font-bold bg-gold-500 rounded-full text-xl  text-ink-900 items-center justify-center'>View All< FaArrowRight/></Link>
-                     </div>
+        <div className=' flex justify-center transition duration-300  hover:scale-97' >
+          <Link to="/categories" className='flex gap-3 mt-15 px-5 py-1 font-bold bg-gold-500 rounded-full text-xl  text-ink-900 items-center justify-center'>View All< FaArrowRight /></Link>
+        </div>
       </div>
 
     </section>

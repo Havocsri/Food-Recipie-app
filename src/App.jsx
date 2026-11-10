@@ -10,7 +10,7 @@ import Favorites from "./pages/FavoritePage"
 
 
 function App() {
-  
+
 
   return (
     <>
@@ -23,10 +23,10 @@ function App() {
         <Route path="/recipe/:id" element={<RecipeDetails />} />
         <Route path="/favorites" element={<Favorites />} />
       </Routes>
-      
-        <Footer></Footer>
-       
-     </>
+
+      <Footer></Footer>
+
+    </>
   )
 }
 

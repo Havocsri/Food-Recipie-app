@@ -1,16 +1,16 @@
-import { FaHome,  FaRegHeart, FaThLarge, FaSearch, } from "react-icons/fa";
+import { FaHome, FaRegHeart, FaThLarge, FaSearch, } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 const NavBar = () => {
   return (
     <nav className=" flex w-full max-w-8xl items-center justify-between bg-ink-900 px-6 py-3 shadow-2xl ">
-      
+
       {/* Logo */}
-          <div className="flex items-center  cursor-pointer ">
-              <img src={logo} alt="Recipe Explorer Logo"
-          className="h-12 w-25 object-contain"/>
-        
+      <div className="flex items-center  cursor-pointer ">
+        <img src={logo} alt="Recipe Explorer Logo"
+          className="h-12 w-25 object-contain" />
+
 
         <h1 className="whitespace-nowrap text-xl font-bold  mr-3  shadow-2xl  hover:shadow-gold-500 text-cream">
           Recipe <span className="text-gold-500">Explorer</span>
@@ -19,7 +19,7 @@ const NavBar = () => {
 
       {/* Navigation */}
       <div className="flex items-center gap-10">
-        
+
         {/* Home */}
         <Link to="/" className="flex gap-1 items-center font-bold text-cream transition cursor-pointer hover:bg-gold-400 px-3 py-1 rounded-full hover:text-ink-900">
           <FaHome />
@@ -33,11 +33,9 @@ const NavBar = () => {
           <input
             type="text"
             placeholder="Search  recipes..."
-                className="w-40 flex-1 outline-none "
-                  />
-                    <button className="ml-2 flex justify-end rounded-full bg-ink-900 px-5 py-1 text-sm font-medium text-gold-400 transition hover:bg-ink-700">
-      Search
-    </button>
+            className="w-40 flex-1 outline-none " />
+          <button className="ml-2 flex justify-end rounded-full bg-ink-900 px-5 py-1 text-sm font-medium text-gold-400 transition hover:bg-ink-700"> Search
+          </button>
         </div>
 
         {/* Categories */}
