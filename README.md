@@ -30,6 +30,17 @@ Recipe Explorer is a modern food recipe landing page built with React and Vite. 
 - Added Beef, Chicken, Dessert, and Vegetarian cards to the Home page.
 - Updated the text on the Categories page.
 
+## RECENT UPDATE 
+## Features
+
+- Browse food categories.
+- Select a category to see its recipes.
+- Select a recipe to view its details.
+
+## API
+
+Recipe data is provided by [TheMealDB](https://www.themealdb.com/api.php).
+
 
 
 ## Tech Stack

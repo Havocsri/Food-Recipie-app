@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom"
 const Categories = () => {
   const [categories, setCategories] = useState([]);
+const navigate = useNavigate();
 
   useEffect(() => {
     const getCategories = async () => {
@@ -36,7 +37,7 @@ const Categories = () => {
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 
           {categories.map((category) => (
-            <div
+            <div  onClick={() => navigate(`/category/${category.strCategory}`)}
               key={category.idCategory}
               className="group cursor-pointer overflow-hidden rounded-2xl border border-ink-700 bg-ink-900 transition duration-300 hover:-translate-y-2 hover:border-gold-500"
             >
