@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {  useParams } from "react-router-dom";
-
+import { FaRegHeart } from "react-icons/fa";
 const RecipeDetails = () => {
   
   const { id } = useParams();
@@ -32,13 +32,16 @@ const RecipeDetails = () => {
       <div className="mx-auto max-w-8xl">
               <div className="grid grid-cols-1 gap-10 px-6 md:grid-cols-2 md:items-center ">
                   
-
-{/* Image */}
+         <div className="relative">
+         {/* Image */}
         <img
           src={recipe.strMealThumb}
           alt={recipe.strMeal}
           className=" h-80 w-175 rounded-2xl cursor-pointer transition hover:translate-y-1 object-cover"/>
-
+ <button className="absolute right-3 top-3 rounded-full bg-cream cursor-pointer p-3 text-xl text-ink-900 shadow-lg">
+    <FaRegHeart />
+  </button>
+              </div>
         {/* Recipe Name */}
         <h1 className="text-3xl mb-25 font-bold  md:text-5xl">
                       {recipe.strMeal}

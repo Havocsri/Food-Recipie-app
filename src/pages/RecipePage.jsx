@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate,  } from "react-router-dom";
+import { useParams, useNavigate, } from "react-router-dom";
+import { FaRegHeart } from "react-icons/fa";
 
 const RecipePage = () => {
   
@@ -50,15 +51,20 @@ const RecipePage = () => {
               <div     
               key={recipe.idMeal}
               onClick={() => navigate(`/recipe/${recipe.idMeal}`)}
-              className=" cursor-pointer overflow-hidden rounded-xl bg-ink-900 transition duration-300 border border-ink-900 hover:border-gold-400 hover:-translate-y-1"
+              className="  overflow-hidden rounded-xl bg-ink-900 transition duration-300 border border-ink-900 hover:border-gold-400 hover:-translate-y-1"
             >
-
+             <div className="relative">
               {/* Recipe Image */}
               <img
                 src={recipe.strMealThumb}
                 alt={recipe.strMeal}
                 className="h-48 w-full object-cover transition duration-300 group-hover:scale-103"
               />
+               <button className="absolute right-3 top-3 rounded-full bg-cream cursor-pointer p-3 text-xl text-ink-900 shadow-lg">
+    <FaRegHeart />
+  </button>
+              </div>
+
 
               {/* Recipe Name */}
               <div className="p-4">
