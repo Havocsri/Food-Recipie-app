@@ -3,19 +3,32 @@ import { useNavigate } from "react-router-dom"
 const Categories = () => {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
+   const [error, setError] = useState("");
 
   useEffect(() => {
+    const controller = new AbortController();
     const getCategories = async () => {
-      const response = await fetch(
-        "https://www.themealdb.com/api/json/v1/1/categories.php"
-      );
+      try {
+        const response = await fetch(
+          "https://www.themealdb.com/api/json/v1/1/categories.php" , {signal:controller.signal}
+        );
 
-      const data = await response.json();
+        if (!response.ok) {
+          throw new Error("test error");
+        }
 
-      setCategories(data.categories);
+        const data = await response.json();
+
+        setCategories(data.categories);
+      } catch (error) {
+        if (error.name !="AbortError") {
+          setError("Could not load categories . Please check your internet connection and try again.")
+        }
+      }
     };
 
     getCategories();
+    return () => controller.abort();
   }, []);
 
   return (
@@ -32,6 +45,8 @@ const Categories = () => {
           Explore delicious recipes from around the world , discover new flavors , and find the perfect dish .
         </p>
 
+        {error && <p className="mt-10  text-center text-red-400">{error}</p>}
+        
 
         {/* Categories Grid */}
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

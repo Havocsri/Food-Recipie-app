@@ -1,6 +1,7 @@
 import HeroSection from "../Components/HeroSection";
 import Categories from "../Components/DisplayFoods";
-// import Footer from "../Components/Footer";
+
+
 
 const Home = () => {
   return (
@@ -8,7 +9,7 @@ const Home = () => {
       <HeroSection />
 
       <Categories />
-
+      
 
     </>
   );
