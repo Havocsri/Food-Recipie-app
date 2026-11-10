@@ -2,13 +2,14 @@ import beef from '../assets/beef.png';
 import chicken from '../assets/chicken.png';
 import vegeterain from '../assets/vegeterian.png';
 import dessert from '../assets/dessert.png';
-
+import { Navigate, useNavigate } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 
 
 const Categories = () => {
+  const Navigate = useNavigate();
   const categories = [
     {
       name: "Beef",
@@ -29,7 +30,7 @@ const Categories = () => {
   ];
 
   return (
-    <section className="bg-ink-900 px-6 py-8 text-cream">
+    <section className="bg-ink-900 px-6 py-6 text-cream">
 
       {/* Heading */}
       <div className="mx-auto max-w-8xl">
@@ -48,6 +49,7 @@ const Categories = () => {
           {categories.map((category) => (
             <div
               key={category.name}
+              onClick={() => Navigate(`/category/${category.name}`)}
               className="group cursor-pointer overflow-hidden rounded-xl bg-ink-900 transition duration-300 hover:-translate-y-2"
             >
 
@@ -70,7 +72,7 @@ const Categories = () => {
                  
         </div>
                      <div className=' flex justify-center transition duration-300  hover:scale-97' >
-                      <Link to="/categories" className='flex gap-5 mt-15 px-7 py-3 font-bold bg-gold-500 rounded-full text-2xl  text-ink-900 items-center justify-center'>View All < FaArrowRight/></Link>
+                      <Link to="/categories" className='flex gap-3 mt-15 px-5 py-1 font-bold bg-gold-500 rounded-full text-xl  text-ink-900 items-center justify-center'>View All< FaArrowRight/></Link>
                      </div>
       </div>
 

@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 
 import  { useState, useEffect } from "react";
 import food1 from "../assets/image-1.png";
@@ -25,7 +25,7 @@ const HeroSection = () => {
 
   return (
     <>
-        <section  className="p-10 flex min-h-125 w-100% max-w-8xl items-center justify-between overflow-hidden py-12  bg-ink-900">
+        <section  className="p-10 flex min-h-125 w-100% max-w-8xl items-center justify-between overflow-hidden py-14  bg-ink-900">
       
       {/* Left Side - Welcome Content */}
       <div className="w-1/2">
@@ -51,11 +51,11 @@ const HeroSection = () => {
         </p>
 
         {/* Button */}
-        <button className="mt-7 flex items-center gap-4 rounded-full bg-gold-400 px-6 py-3 font-semibold text-ink-900 transition duration-300 hover:scale-97 hover:bg-gold-500">
+        < button><Link to="/categories" className="mt-7 flex items-center gap-4 rounded-full bg-gold-400 px-6 py-3 font-semibold text-ink-900 transition duration-300 hover:scale-97 hover:bg-gold-500">
           <FaSearch />
           Explore Recipes
           <FaArrowRight />
-        </button>
+        </Link></button>
 
       </div>
 
