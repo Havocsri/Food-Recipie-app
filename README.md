@@ -45,6 +45,13 @@ Recipe data is provided by [TheMealDB](https://www.themealdb.com/api.php).
 
 Click a recipe to view its details, including ingredients and cooking instructions. Recipe information is provided by TheMealDB API.
 
+
+### Favorites
+
+- Click the heart icon to add or remove a recipe from favorites.
+- A filled red heart means the recipe is favorited; an outline heart means it is not.
+- Clicking the heart does not open the recipe details page.
+
 ## Tech Stack
 
 - React

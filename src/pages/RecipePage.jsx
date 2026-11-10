@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, } from "react-router-dom";
-import { FaRegHeart } from "react-icons/fa";
+import { FaRegHeart,FaHeart } from "react-icons/fa";
 
 const RecipePage = () => {
   
   const { name } = useParams();
-
-  
   const [recipes, setRecipes] = useState([]);
-
-  
   const navigate = useNavigate();
+  const [Favorite, setFavorite] = useState([]);
 
  
   useEffect(() => {
@@ -26,6 +23,15 @@ const RecipePage = () => {
 
     getRecipes();
   }, [name]);
+
+  const toggleFavorite = (event, id) => {
+    event.stopPropagation();
+    setFavorite((prev) =>
+      prev.includes(id) ? prev.filter((favoriteId) => favoriteId != id) : [...prev, id]);
+  };
+
+
+
 
   return (
     <section className="min-h-screen bg-ink-900 px-6 py-12 text-cream">
@@ -60,9 +66,10 @@ const RecipePage = () => {
                 alt={recipe.strMeal}
                 className="h-48 w-full object-cover transition duration-300 group-hover:scale-103"
               />
-               <button className="absolute right-3 top-3 rounded-full bg-cream cursor-pointer p-3 text-xl text-ink-900 shadow-lg">
-    <FaRegHeart />
-  </button>
+                <button onClick={(event) => toggleFavorite(event, recipe.idMeal) }
+                  className="absolute right-3 top-3 rounded-full bg-cream cursor-pointer p-3 text-xl text-ink-900 shadow-lg" >
+                   {Favorite.includes(recipe.idMeal) ? (<FaHeart className="text-red-500" /> ) : (<FaRegHeart />)}
+               </button>
               </div>
 
 
