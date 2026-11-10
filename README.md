@@ -41,7 +41,9 @@ Recipe Explorer is a modern food recipe landing page built with React and Vite. 
 
 Recipe data is provided by [TheMealDB](https://www.themealdb.com/api.php).
 
+## Recipe Details
 
+Click a recipe to view its details, including ingredients and cooking instructions. Recipe information is provided by TheMealDB API.
 
 ## Tech Stack
 

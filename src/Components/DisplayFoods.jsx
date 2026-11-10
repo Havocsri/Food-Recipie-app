@@ -2,7 +2,7 @@ import beef from '../assets/beef.png';
 import chicken from '../assets/chicken.png';
 import vegeterain from '../assets/vegeterian.png';
 import dessert from '../assets/dessert.png';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 

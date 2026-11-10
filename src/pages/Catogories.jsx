@@ -39,8 +39,7 @@ const navigate = useNavigate();
           {categories.map((category) => (
             <div  onClick={() => navigate(`/category/${category.strCategory}`)}
               key={category.idCategory}
-              className="group cursor-pointer overflow-hidden rounded-2xl border border-ink-700 bg-ink-900 transition duration-300 hover:-translate-y-2 hover:border-gold-500"
-            >
+              className="group cursor-pointer overflow-hidden rounded-2xl border border-ink-700 bg-ink-900 transition duration-300 hover:-translate-y-2 hover:border-gold-500" >
 
               {/* Category Image */}
               <img
