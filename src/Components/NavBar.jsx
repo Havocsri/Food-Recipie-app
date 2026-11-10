@@ -47,10 +47,10 @@ const NavBar = () => {
         </Link>
 
         {/* Favorites */}
-        <div className="flex gap-1 items-center font-bold text-cream transition  cursor-pointer hover:bg-gold-400 px-3 py-1 rounded-full hover:text-ink-900">
+        <Link to="/favorites" className="flex gap-1 items-center font-bold text-cream transition  cursor-pointer hover:bg-gold-400 px-3 py-1 rounded-full hover:text-ink-900">
           < FaRegHeart />
           <span>Favorites</span>
-        </div>
+        </Link>
 
       </div>
     </nav>

@@ -39,14 +39,14 @@ const RecipePage = () => {
       <div className="mx-auto max-w-8xl">
 
         {/* Heading */}
-        <h1 className="text-3xl flex gap-3  font-bold md:text-4xl">
+        <h1 className="text-3xl flex gap-3 justify-center font-bold md:text-5xl">
           {name}
           <span className="text-gold-500 ">
             Recipes
           </span>
         </h1>
 
-        <p className="mt-2 text-xl  text-muted">
+        <p className="mt-3 text-xl md:text-3xl flex justify-center text-muted">
           Explore delicious {name} recipes
         </p>
 
