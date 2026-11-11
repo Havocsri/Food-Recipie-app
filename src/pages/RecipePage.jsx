@@ -11,9 +11,10 @@ const RecipePage = () => {
 
 
   useEffect(() => {
+    const controller = new AbortController();
     const getRecipes = async () => {
       const response = await fetch(
-        `https://www.themealdb.com/api/json/v1/1/filter.php?c=${name}`
+        `https://www.themealdb.com/api/json/v1/1/filter.php?c=${name}`,{signal:controller.signal}
       );
 
       const data = await response.json();
@@ -22,6 +23,7 @@ const RecipePage = () => {
     };
 
     getRecipes();
+    return () => controller.abort();
   }, [name]);
 
   const toggleFavorite = (event, id) => {

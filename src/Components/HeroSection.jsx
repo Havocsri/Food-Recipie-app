@@ -59,13 +59,20 @@ const HeroSection = () => {
         </div>
 
         {/* Right Side - Food Image */}
-        <div className="flex w-1/2 justify-center">
+        <div className="flex w-1/2 flex-col items-center  justify-center">
 
           <img
             src={foodImages[currentImage]}
             alt="Delicious Food"
             className="w-200 h-100   max-w-lg object-cover rounded-xl shadow-lg transition duration-500 hover:scale-99"
-          />
+          />      
+             <div className="mt-4 flex gap-2">
+                 {foodImages.map((_, index) => (
+                   <button key={index}  type="button"
+                     onClick={() => setCurrentImage(index)}
+                     className={`h-3 w-3 rounded-full border border-cream ${
+                   currentImage == index ? "bg-muted" : "bg-transparent" }`} /> ))}
+               </div>
 
         </div>
 

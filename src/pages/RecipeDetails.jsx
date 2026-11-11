@@ -7,8 +7,9 @@ const RecipeDetails = () => {
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
+    const controller = new AbortController();
     const getRecipeDetails = async () => {
-      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`,{signal:controller.signal});
 
       const data = await response.json();
 
@@ -16,6 +17,7 @@ const RecipeDetails = () => {
     };
 
     getRecipeDetails();
+    return () => controller.abort();
   }, [id]);
 
   // API loading
