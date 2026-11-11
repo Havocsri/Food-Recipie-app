@@ -6,6 +6,7 @@ import Categories from "./pages/Catogories"
 import RecipePage from "./pages/RecipePage"
 import RecipeDetails from "./pages/RecipeDetails";
 import Favorites from "./pages/FavoritePage"
+import SearchPage from "./pages/SearchPage";
 
 
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/category/:name" element={<RecipePage />} />
         <Route path="/recipe/:id" element={<RecipeDetails />} />
         <Route path="/favorites" element={<Favorites />} />
+        <Route path="/search/:query" element={<SearchPage />} />
       </Routes>
         <Footer></Footer>
       
