@@ -16,12 +16,15 @@ const RecipePage = () => {
   // This stores the list of favorite recipe IDs.
   const [Favorite, setFavorite] = useState([]);
 
+  const [loading, setLoading] = useState(true);
+
   // This runs when the category name changes.
   // It fetches all recipes in that category from the API.
   useEffect(() => {
     const controller = new AbortController();
 
     const getRecipes = async () => {
+      setLoading(true);
       const response = await fetch(
         `https://www.themealdb.com/api/json/v1/1/filter.php?c=${name}`,
         { signal: controller.signal }
@@ -31,6 +34,7 @@ const RecipePage = () => {
 
       // If there are no meals, keep the array empty.
       setRecipes(data.meals || []);
+      setLoading(false);
     };
 
     getRecipes();
@@ -46,6 +50,16 @@ const RecipePage = () => {
       prev.includes(id) ? prev.filter((favoriteId) => favoriteId != id) : [...prev, id]
     );
   };
+
+       // If data is still loading, show a loading animation.
+  if (loading) {
+    return (
+       <div className=" h-100 flex items-center justify-center bg-ink-900">
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-gold-500 border-t-transparent"></div>
+    </div>
+    );
+  }
+
 
   return (
     <section className="min-h-screen bg-ink-900 px-6 py-12 text-cream">

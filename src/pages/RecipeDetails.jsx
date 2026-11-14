@@ -9,17 +9,21 @@ const RecipeDetails = () => {
   // This stores the selected recipe details.
   const [recipe, setRecipe] = useState(null);
 
+  const [loading, setLoading] = useState(true);
+
   // This runs when the recipe id changes.
   // It fetches one recipe from the API using its ID.
   useEffect(() => {
     const controller = new AbortController();
 
     const getRecipeDetails = async () => {
+      setLoading(true);
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`, { signal: controller.signal });
 
       const data = await response.json();
 
       setRecipe(data.meals[0]);
+      setLoading(false);
     };
 
     getRecipeDetails();
@@ -28,12 +32,12 @@ const RecipeDetails = () => {
     return () => controller.abort();
   }, [id]);
 
-  // If data is still loading, show a loading message.
-  if (!recipe) {
+  // If data is still loading, show a loading animation.
+  if (loading) {
     return (
-      <div className="min-h-screen bg-ink-900 p-10 text-center text-cream">
-        Loading...
-      </div>
+       <div className=" h-150 flex items-center justify-center bg-ink-900">
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-gold-500 border-t-transparent"></div>
+    </div>
     );
   }
 

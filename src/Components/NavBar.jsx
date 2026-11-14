@@ -48,11 +48,11 @@ const NavBar = () => {
             type="text"
             value={searchText}
             onChange={(event) => setSearchText(event.target.value)}
-           // onKeyDown={(event) => {
-              // if (event.key == "Enter") {
-              //   handleSearch();
-              // }
-            //}}
+            onKeyDown={(event) => {
+              if (event.key == "Enter") {
+                handleSearch();
+              }
+            }}
             placeholder="Search  recipes..."
             className="w-40 flex-1 outline-none " />
           <button className="ml-2 flex justify-end rounded-full bg-ink-900 px-5 py-1 text-sm font-medium text-gold-400 transition hover:bg-ink-700" onClick={handleSearch}> Search

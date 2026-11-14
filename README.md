@@ -2,7 +2,7 @@
   
   # Recipe Explorer
 
-Recipe Explorer is a modern food recipe landing page built with React and Vite. It showcases a clean UI with a navigation bar, search section, and a featured food image slider.
+Recipe Explorer is a food recipe website built with React and Vite. It helps users browse food categories, search recipes, view recipe details, and save favorite dishes.
 
 ## Features
 
@@ -56,8 +56,59 @@ Click a recipe to view its details, including ingredients and cooking instructio
 
 - React
 - Vite
+- React Router
 - Tailwind CSS
 - React Icons
+- TheMealDB API
 
+## Project Overview
 
+This app lets users:
 
+- Explore different food categories
+- Search recipes by keyword
+- View recipe images and details
+- Read ingredients and cooking steps
+- Save favorite recipes
+
+## Pages
+
+- Home page
+- Categories page
+- Search page
+- Recipe details page
+- Favorites page
+
+## Loading State
+
+The app uses a loading state while fetching data from TheMealDB API.  
+A spinner is shown until the data is ready, so the user knows the page is still loading.
+
+## Installation
+
+1. Open the project folder
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Run the app:
+
+```bash
+npm run dev
+```
+
+4. Open the local website in your browser
+
+## Usage
+
+- Open the Home page
+- Click a category
+- Select a recipe
+- View ingredients and instructions
+- Add recipes to favorites
+
+## Developer Notes
+
+This project is created for learning React, routing, API integration, and UI design.

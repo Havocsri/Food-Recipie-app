@@ -21,10 +21,13 @@ const SearchPage = () => {
     const [categories, setCategories] = useState([]);
     const [selectedIngredient, setSelectedIngredient] = useState("");
 
+     const [loading, setLoading] = useState(true);
+
     // This runs when the search word changes.
     // It fetches recipes from the MealDB API using the search .
     useEffect(() => {
         const getRecipes = async () => {
+            setLoading(true);
             const response = await fetch(
                 `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`
             );
@@ -33,6 +36,7 @@ const SearchPage = () => {
 
             // If no meals are found, show an empty list.
             setRecipes(data.meals || []);
+            setLoading(false);
         };
 
         getRecipes();
@@ -100,6 +104,17 @@ const SearchPage = () => {
         setRecipes(data.meals || []);
     };
 
+
+    
+       // If data is still loading, show a loading animation.
+  if (loading) {
+    return (
+       <div className=" h-100 flex items-center justify-center bg-ink-900">
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-gold-500 border-t-transparent"></div>
+    </div>
+    );
+  }
+
     return (
         <div className="mx-auto flex max-w-8xl bg-ink-900 gap-8 px-7 py-8">
             {/* LEFT SIDE - FILTER */}
@@ -118,7 +133,7 @@ const SearchPage = () => {
                         <button
                             key={category.strCategory}
                             onClick={() => handleCategory(category.strCategory)}
-                            className={`mt-3 block cursor-pointer transition ${selectedCategory === category.strCategory
+                            className={`mt-3 block cursor-pointer transition ${selectedCategory == category.strCategory
                                     ? "text-ink-900 bg-gold-500 rounded-full px-3"
                                     : "text-cream transition hover:translate-y-1"
                                 }`}
@@ -137,7 +152,7 @@ const SearchPage = () => {
                         <button
                             key={ingredient}
                             onClick={() => handleIngredient(ingredient)}
-                            className={`mt-3 block cursor-pointer transition ${selectedIngredient === ingredient
+                            className={`mt-3 block cursor-pointer transition ${selectedIngredient == ingredient
                                     ? "text-ink-900 bg-gold-500 rounded-full px-3"
                                     : "text-cream transition hover:translate-y-1"
                                 }`}

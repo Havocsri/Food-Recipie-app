@@ -3,33 +3,48 @@ import { useNavigate } from "react-router-dom"
 const Categories = () => {
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
-   const [error, setError] = useState("");
-
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const controller = new AbortController();
     const getCategories = async () => {
+      setLoading(true);
       try {
         const response = await fetch(
           "https://www.themealdb.com/api/json/v1/1/categories.php" , {signal:controller.signal}
         );
 
         if (!response.ok) {
-          throw new Error("test error");
+          throw new Error("Failed to load categories");
         }
 
         const data = await response.json();
-
+        setLoading(false);
         setCategories(data.categories);
+        
       } catch (error) {
         if (error.name !="AbortError") {
           setError("Could not load categories . Please check your internet connection and try again.")
         }
       }
+     
     };
 
     getCategories();
+    
     return () => controller.abort();
+    
   }, []);
+
+         // If data is still loading, show a loading animation.
+  if (loading) {
+    return (
+       <div className=" h-100 flex items-center justify-center bg-ink-900">
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-gold-500 border-t-transparent"></div>
+    </div>
+    );
+  }
+
 
   return (
     <section className=" bg-ink-900 px-6 py-9 text-cream">
