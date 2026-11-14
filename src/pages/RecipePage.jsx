@@ -18,23 +18,39 @@ const RecipePage = () => {
 
   const [loading, setLoading] = useState(true);
 
+  const [error, setError] = useState("");
+
   // This runs when the category name changes.
   // It fetches all recipes in that category from the API.
   useEffect(() => {
     const controller = new AbortController();
 
     const getRecipes = async () => {
-      setLoading(true);
-      const response = await fetch(
-        `https://www.themealdb.com/api/json/v1/1/filter.php?c=${name}`,
-        { signal: controller.signal }
-      );
+      try {
+        setLoading(true);
+        setError("");
+        const response = await fetch(
+          `https://www.themealdb.com/api/json/v1/1/filter.php?c=${name}`,
+          { signal: controller.signal }
+        );
 
-      const data = await response.json();
+        if (!response.ok) {
+          throw new Error("Failed to fetch recipe page");
+        }
+        const data = await response.json();
 
-      // If there are no meals, keep the array empty.
-      setRecipes(data.meals || []);
-      setLoading(false);
+        if (!data.meals) {
+          throw new Error("Recipes are not found");
+        }
+
+        // If there are no meals, keep the array empty.
+        setRecipes(data.meals || []);
+        setLoading(false);
+      } catch {
+        if (error.name != "AbortError") {
+           setError(error.message);
+        }
+      }
     };
 
     getRecipes();
@@ -115,6 +131,7 @@ const RecipePage = () => {
         </div>
       </div>
     </section>
+    
   );
 };
 

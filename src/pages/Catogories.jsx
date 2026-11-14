@@ -19,8 +19,8 @@ const Categories = () => {
         }
 
         const data = await response.json();
-        setLoading(false);
         setCategories(data.categories);
+        setLoading(false);
         
       } catch (error) {
         if (error.name !="AbortError") {

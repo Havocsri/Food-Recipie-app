@@ -9,24 +9,36 @@ const RecipeDetails = () => {
   // This stores the selected recipe details.
   const [recipe, setRecipe] = useState(null);
 
+  //loading statement 
   const [loading, setLoading] = useState(true);
 
   // This runs when the recipe id changes.
   // It fetches one recipe from the API using its ID.
   useEffect(() => {
     const controller = new AbortController();
-
+   
     const getRecipeDetails = async () => {
+      
       setLoading(true);
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`, { signal: controller.signal });
 
+      if (!response.ok) {
+        throw new Error("Failed to fetch recipe details");
+      }
+
       const data = await response.json();
+      
+      if (!data.meals) {
+        throw new Error("recipe is not found")
+      }
 
       setRecipe(data.meals[0]);
       setLoading(false);
+      
     };
 
     getRecipeDetails();
+  
 
     // Cancel the request when the component changes or closes.
     return () => controller.abort();
@@ -40,6 +52,8 @@ const RecipeDetails = () => {
     </div>
     );
   }
+
+
 
   return (
     <section className="min-h-screen bg-ink-900 px-6 py-12 text-cream">
