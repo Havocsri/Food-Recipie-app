@@ -1,8 +1,22 @@
 import { FaHome, FaRegHeart, FaThLarge, FaSearch, } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
+
+  const [searchText, setSearchText] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    if (searchText.trim() !== "") {
+      navigate(`/search/${searchText}`);
+      
+    }
+  };
+
   return (
     <nav className=" flex w-full max-w-8xl items-center justify-between bg-ink-900 px-6 py-3 shadow-2xl ">
 
@@ -32,9 +46,16 @@ const NavBar = () => {
 
           <input
             type="text"
+            value={searchText}
+            onChange={(event) => setSearchText(event.target.value)}
+           // onKeyDown={(event) => {
+              // if (event.key == "Enter") {
+              //   handleSearch();
+              // }
+            //}}
             placeholder="Search  recipes..."
             className="w-40 flex-1 outline-none " />
-          <button className="ml-2 flex justify-end rounded-full bg-ink-900 px-5 py-1 text-sm font-medium text-gold-400 transition hover:bg-ink-700"> Search
+          <button className="ml-2 flex justify-end rounded-full bg-ink-900 px-5 py-1 text-sm font-medium text-gold-400 transition hover:bg-ink-700" onClick={handleSearch}> Search
           </button>
         </div>
 

@@ -1,3 +1,4 @@
+
 const Favorites = () => {
   return (
     <section className="min-h-screen bg-ink-900 px-6 py-12 text-cream">
