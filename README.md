@@ -84,6 +84,12 @@ This app lets users:
 The app uses a loading state while fetching data from TheMealDB API.  
 A spinner is shown until the data is ready, so the user knows the page is still loading.
 
+
+## Error Handling
+
+The app handles API errors safely. If a request fails, the user sees a clear error message instead of a broken page. Loading states are also shown while data is being fetched.
+
+
 ## Installation
 
 1. Open the project folder
