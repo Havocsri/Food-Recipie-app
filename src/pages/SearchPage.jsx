@@ -21,24 +21,36 @@ const SearchPage = () => {
     const [categories, setCategories] = useState([]);
     const [selectedIngredient, setSelectedIngredient] = useState("");
 
-     const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
+
+    const [error, setError] = useState("");
 
     // This runs when the search word changes.
     // It fetches recipes from the MealDB API using the search .
     useEffect(() => {
         const getRecipes = async () => {
-            setLoading(true);
-            const response = await fetch(
-                `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`
-            );
+            try {
+                setLoading(true);
+                setError("");
+                const response = await fetch(
+                    `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`
+                );
 
-            const data = await response.json();
 
-            // If no meals are found, show an empty list.
-            setRecipes(data.meals || []);
-            setLoading(false);
+                if (!response.ok) {
+                    throw new Error("Failed to search recipes");
+                }
+
+                const data = await response.json();
+                
+             // If no meals are found, show an empty list.
+                setRecipes(data.meals || []);
+                setLoading(false);
+            } catch (error) {
+                setError(error.message);
+                setLoading(false);
+            }
         };
-
         getRecipes();
     }, [query]);
 
@@ -53,29 +65,49 @@ const SearchPage = () => {
 
     // This function loads recipes by selected category.
     const handleCategory = async (category) => {
-        setSelectedCategory(category);
-        setSelectedIngredient("");
+        try {
+            setError("");
+            setSelectedCategory(category);
+            setSelectedIngredient("");
+            setLoading(true);
+            const response = await fetch(
+                `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
+            );
 
-        const response = await fetch(
-            `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
-        );
+            if (!response.ok) {
+                throw new Error("Failed to load category recipes");
+            }
 
-        const data = await response.json();
-
-        setRecipes(data.meals || []);
+            const data = await response.json();
+            setRecipes(data.meals || []);
+            setLoading(false);
+        } catch (error) {
+            setError(error.message);
+            setLoading(false);
+        }
     };
 
     // This runs once when the page loads.
     // It gets all category names from the API.
     useEffect(() => {
         const getCategories = async () => {
-            const response = await fetch(
-                "https://www.themealdb.com/api/json/v1/1/list.php?c=list"
-            );
+            try {
+                setLoading(true);
+                const response = await fetch(
+                    "https://www.themealdb.com/api/json/v1/1/list.php?c=list"
+                );
+                if (!response.ok) {
+                    throw new Error("Failed to load categories");
+                }
 
-            const data = await response.json();
 
-            setCategories(data.meals || []);
+                const data = await response.json();
+                setCategories(data.meals || []);
+                setLoading(false);
+            } catch (error) {
+                setError(error.message);
+                setLoading(false);
+            }
         };
 
         getCategories();
@@ -92,28 +124,41 @@ const SearchPage = () => {
 
     // This function loads recipes by selected ingredient.
     const handleIngredient = async (ingredient) => {
-        setSelectedIngredient(ingredient);
-        setSelectedCategory("");
+        try {
+            setError("");
+            setSelectedIngredient(ingredient);
+            setSelectedCategory("");
+            setLoading(true);
 
-        const response = await fetch(
-            `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`
-        );
+            const response = await fetch(
+                `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`
+            );
+            if (!response.ok) {
+                throw new Error("Failed to load ingredient recipes");
+            }
 
-        const data = await response.json();
 
-        setRecipes(data.meals || []);
+            const data = await response.json();
+
+            setRecipes(data.meals || []);
+            setLoading(false);
+
+        } catch (error) {
+            setError(error.message);
+            setLoading(false);
+        }
     };
 
 
-    
-       // If data is still loading, show a loading animation.
-  if (loading) {
-    return (
-       <div className=" h-100 flex items-center justify-center bg-ink-900">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-gold-500 border-t-transparent"></div>
-    </div>
-    );
-  }
+
+    // If data is still loading, show a loading animation.
+    if (loading) {
+        return (
+            <div className=" h-100 flex items-center justify-center bg-ink-900">
+                <div className="h-12 w-12 animate-spin rounded-full border-4 border-gold-500 border-t-transparent"></div>
+            </div>
+        );
+    }
 
     return (
         <div className="mx-auto flex max-w-8xl bg-ink-900 gap-8 px-7 py-8">
@@ -134,8 +179,8 @@ const SearchPage = () => {
                             key={category.strCategory}
                             onClick={() => handleCategory(category.strCategory)}
                             className={`mt-3 block cursor-pointer transition ${selectedCategory == category.strCategory
-                                    ? "text-ink-900 bg-gold-500 rounded-full px-3"
-                                    : "text-cream transition hover:translate-y-1"
+                                ? "text-ink-900 bg-gold-500 rounded-full px-3"
+                                : "text-cream transition hover:translate-y-1"
                                 }`}
                         >
                             {category.strCategory}
@@ -153,8 +198,8 @@ const SearchPage = () => {
                             key={ingredient}
                             onClick={() => handleIngredient(ingredient)}
                             className={`mt-3 block cursor-pointer transition ${selectedIngredient == ingredient
-                                    ? "text-ink-900 bg-gold-500 rounded-full px-3"
-                                    : "text-cream transition hover:translate-y-1"
+                                ? "text-ink-900 bg-gold-500 rounded-full px-3"
+                                : "text-cream transition hover:translate-y-1"
                                 }`}
                         >
                             {ingredient}
@@ -171,7 +216,11 @@ const SearchPage = () => {
                     <span className="text-gold-500">{query}</span>
                 </h1>
 
-                {recipes.length == 0 ? (
+                {error ? (
+                    <p className="mt-8 text-xl text-red-600">
+                        {error}
+                    </p>
+                ): recipes.length == 0 ? (
                     <p className="mt-8 text-red-600">No recipes found</p>
                 ) : (
                     <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

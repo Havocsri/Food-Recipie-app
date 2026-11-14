@@ -48,7 +48,8 @@ const RecipePage = () => {
         setLoading(false);
       } catch {
         if (error.name != "AbortError") {
-           setError(error.message);
+          setError(error.message);
+          setLoading(false);
         }
       }
     };
