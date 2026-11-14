@@ -25,6 +25,7 @@ const SearchPage = () => {
 
     const [error, setError] = useState("");
 
+
     // This runs when the search word changes.
     // It fetches recipes from the MealDB API using the search .
     useEffect(() => {
@@ -32,6 +33,9 @@ const SearchPage = () => {
             try {
                 setLoading(true);
                 setError("");
+                // Reset previous filter selection when searching
+                setSelectedCategory("");
+                setSelectedIngredient("");
                 const response = await fetch(
                     `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`
                 );
@@ -43,7 +47,7 @@ const SearchPage = () => {
 
                 const data = await response.json();
 
-             // If no meals are found, show an empty list.
+                // If no meals are found, show an empty list.
                 setRecipes(data.meals || []);
                 setLoading(false);
             } catch (error) {
@@ -53,6 +57,7 @@ const SearchPage = () => {
         };
         getRecipes();
     }, [query]);
+
 
     // This function adds or removes a recipe from favorite list.
     // It also stops the click from opening the recipe page when heart button is clicked.
@@ -113,10 +118,13 @@ const SearchPage = () => {
         getCategories();
     }, []);
 
+
+
+
     // This is a fixed list of ingredient buttons shown in the filter area.
     const ingredientList = [
-        "Chicken",
-        "Beef",
+        "Cheese",
+        "egg",
         "Rice",
         "Tomato",
         "Potato",
@@ -178,9 +186,11 @@ const SearchPage = () => {
                         <button
                             key={category.strCategory}
                             onClick={() => handleCategory(category.strCategory)}
-                            className={`mt-3 block cursor-pointer transition ${selectedCategory == category.strCategory
-                                ? "text-ink-900 bg-gold-500 rounded-full px-3"
-                                : "text-cream transition hover:translate-y-1"
+                            className={`mt-3 block cursor-pointer transition ${selectedCategory == category.strCategory ? "text-ink-900 bg-gold-500 rounded-full px-3"
+                                : !selectedCategory &&
+                                    !selectedIngredient && query?.toLowerCase() === category.strCategory.toLowerCase()
+                                    ? "text-ink-900 bg-gold-500 rounded-full px-3"
+                                    : "text-cream transition hover:translate-y-1"
                                 }`}
                         >
                             {category.strCategory}
@@ -197,9 +207,13 @@ const SearchPage = () => {
                         <button
                             key={ingredient}
                             onClick={() => handleIngredient(ingredient)}
-                            className={`mt-3 block cursor-pointer transition ${selectedIngredient == ingredient
-                                ? "text-ink-900 bg-gold-500 rounded-full px-3"
-                                : "text-cream transition hover:translate-y-1"
+                            className={`mt-3 block cursor-pointer transition ${selectedIngredient === ingredient
+                                    ? "text-ink-900 bg-gold-500 rounded-full px-3"
+                                    : !selectedIngredient &&
+                                        !selectedCategory &&
+                                        query?.toLowerCase() === ingredient.toLowerCase()
+                                        ? "text-ink-900 bg-gold-500 rounded-full px-3"
+                                        : "text-cream transition hover:translate-y-1"
                                 }`}
                         >
                             {ingredient}
@@ -212,15 +226,28 @@ const SearchPage = () => {
             {/* This part shows the recipe results on the right side. */}
             <main className="flex-1">
                 <h1 className="text-2xl text-cream font-bold">
-                    Search Results for{" "}
-                    <span className="text-gold-500">{query}</span>
+                    {selectedCategory ? (
+                        <>
+                            Category Results for{" "}
+                            <span className="text-gold-500">{selectedCategory}</span>
+                        </>
+                    ) : selectedIngredient ? (
+                        <>
+                            Ingredient Results for{" "}
+                            <span className="text-gold-500">{selectedIngredient}</span>
+                        </>
+                    ) : (
+                        <>
+                            Search Results for{" "}
+                            <span className="text-gold-500">{query}</span>
+                        </>
+                    )}
                 </h1>
-
                 {error ? (
                     <p className="mt-8 text-4xl text-red-600 flex  justify-center">
                         {error}
                     </p>
-                ): recipes.length == 0 ? (
+                ) : recipes.length == 0 ? (
                     <p className="mt-8 text-3xl flex  justify-center text-red-600">No recipes found</p>
                 ) : (
                     <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
