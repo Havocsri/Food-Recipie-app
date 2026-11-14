@@ -10,7 +10,7 @@ const Favorites = () => {
       <p className="mt-3 text-center text-cream">
         Your favorite recipes will appear here ❤️
       </p>
-
+      
     </section>
   );
 };

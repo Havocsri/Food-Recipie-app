@@ -42,7 +42,7 @@ const SearchPage = () => {
                 }
 
                 const data = await response.json();
-                
+
              // If no meals are found, show an empty list.
                 setRecipes(data.meals || []);
                 setLoading(false);
@@ -217,11 +217,11 @@ const SearchPage = () => {
                 </h1>
 
                 {error ? (
-                    <p className="mt-8 text-xl text-red-600">
+                    <p className="mt-8 text-4xl text-red-600 flex  justify-center">
                         {error}
                     </p>
                 ): recipes.length == 0 ? (
-                    <p className="mt-8 text-red-600">No recipes found</p>
+                    <p className="mt-8 text-3xl flex  justify-center text-red-600">No recipes found</p>
                 ) : (
                     <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                         {recipes.map((recipe) => (
