@@ -1,24 +1,26 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 
 const Favorites = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const [favorites, setFavorites] = useState([]);
+  
 
    
-  // Load saved favorites from localStorage when the page first loads.
-  useEffect(() => {
-    try {
-      const savedFavorites = localStorage.getItem("favorites");
-        setFavorites(
-        savedFavorites ? JSON.parse(savedFavorites) : []
-      );
-    } catch {
-      setError("Failed to load favorites");
-    }
-  }, []);
+  // Initialize the favorites state with recipes saved in localStorage.
+ const [favorites, setFavorites] = useState(() => {
+  try {
+    const savedFavorites = localStorage.getItem("favorites");
+
+    return savedFavorites
+      ? JSON.parse(savedFavorites)
+      : [];
+  } catch (error) {
+    console.error("Failed to load favorites:", error);
+    return [];
+  }
+});
 
   // Remove a recipe from favorites
   const removeFavorite = (event, id) => {

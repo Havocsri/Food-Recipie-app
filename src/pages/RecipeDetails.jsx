@@ -125,8 +125,8 @@ const RecipeDetails = () => {
             <h1 className="mb-5 text-3xl font-bold md:text-5xl">
               {recipe.strMeal}
             </h1>
-
-            <p className="text-xl text-gold-400">
+          <div className="flex items-center gap-4">
+            <p className="text-xl text-gold-400 mt-3">
               {recipe.strCategory} • {recipe.strArea}
             </p>
 
@@ -151,7 +151,8 @@ const RecipeDetails = () => {
                   ))}
                 </div>
               </div>
-            )}
+              )}
+              </div>
           </div>
         </div>
 

@@ -2,7 +2,7 @@ import Home from "./pages/Home"
 import NavBar from "./Components/NavBar"
 import { Route, Routes } from "react-router-dom"
 import Categories from "./pages/Catogories"
- import Footer from "./Components/Footer";
+import Footer from "./Components/Footer";
 import RecipePage from "./pages/RecipePage"
 import RecipeDetails from "./pages/RecipeDetails";
 import Favorites from "./pages/FavoritePage"
