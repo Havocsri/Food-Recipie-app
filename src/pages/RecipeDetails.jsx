@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { FaRegHeart } from "react-icons/fa";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 const RecipeDetails = () => {
   // This gets the recipe id from the URL.
@@ -12,33 +12,45 @@ const RecipeDetails = () => {
   //loading statement 
   const [loading, setLoading] = useState(true);
 
+  const [favorites, setFavorites] = useState(() => {
+    const savedFavorites = localStorage.getItem("favorites");
+
+    return savedFavorites ? JSON.parse(savedFavorites) : [];
+  });
+
   // This runs when the recipe id changes.
   // It fetches one recipe from the API using its ID.
   useEffect(() => {
     const controller = new AbortController();
-   
+
     const getRecipeDetails = async () => {
-      
-      setLoading(true);
-      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`, { signal: controller.signal });
+      try {
+        setLoading(true);
+        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`, { signal: controller.signal });
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch recipe details");
+        if (!response.ok) {
+          throw new Error("Failed to fetch recipe details");
+        }
+
+        const data = await response.json();
+
+        if (!data.meals) {
+          throw new Error("recipe is not found")
+        }
+
+        setRecipe(data.meals[0]);
+        setLoading(false);
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          console.error(error);
+          setLoading(false);
+        }
       }
 
-      const data = await response.json();
-      
-      if (!data.meals) {
-        throw new Error("recipe is not found")
-      }
-
-      setRecipe(data.meals[0]);
-      setLoading(false);
-      
     };
 
     getRecipeDetails();
-  
+
 
     // Cancel the request when the component changes or closes.
     return () => controller.abort();
@@ -47,11 +59,37 @@ const RecipeDetails = () => {
   // If data is still loading, show a loading animation.
   if (loading) {
     return (
-       <div className=" h-150 flex items-center justify-center bg-ink-900">
+      <div className=" h-150 flex items-center justify-center bg-ink-900">
         <div className="h-12 w-12 animate-spin rounded-full border-4 border-gold-500 border-t-transparent"></div>
-    </div>
+      </div>
     );
   }
+
+// Toggles the recipe's favorite status and saves it to localStorage.
+  const toggleFavorite = () => {
+    setFavorites((prev) => {
+      const alreadyExists = prev.some(
+        (item) => item.idMeal === recipe.idMeal
+      );
+
+      let updatedFavorites;
+
+      if (alreadyExists) {
+        updatedFavorites = prev.filter(
+          (item) => item.idMeal !== recipe.idMeal
+        );
+      } else {
+        updatedFavorites = [...prev, recipe];
+      }
+
+      localStorage.setItem(
+        "favorites",
+        JSON.stringify(updatedFavorites)
+      );
+
+      return updatedFavorites;
+    });
+  };
 
 
 
@@ -67,39 +105,54 @@ const RecipeDetails = () => {
               className="h-80 w-175 rounded-2xl cursor-pointer transition hover:translate-y-1 object-cover"
             />
 
-            {/* Favorite button for the recipe */}
-            <button className="absolute right-3 top-3 rounded-full bg-cream cursor-pointer p-3 text-xl text-ink-900 shadow-lg">
-              <FaRegHeart />
+            {/* Button to add or remove this recipe from favorites. */}
+            <button
+              onClick={toggleFavorite}
+              className="absolute right-3 top-3 rounded-full bg-cream cursor-pointer p-3 text-xl text-ink-900 shadow-lg"
+            >
+              {favorites.some(
+                (item) => item.idMeal == recipe.idMeal
+              ) ? (
+                <FaHeart className="text-red-500" />
+              ) : (
+                <FaRegHeart />
+              )}
             </button>
           </div>
 
           {/* This is the recipe name and extra details like category and area. */}
-          <h1 className="text-3xl mb-25 font-bold md:text-5xl">
-            {recipe.strMeal}
+          <div>
+            <h1 className="mb-5 text-3xl font-bold md:text-5xl">
+              {recipe.strMeal}
+            </h1>
 
-            <p className="mt-3 text-xl flex gap-7 text-gold-400">
+            <p className="text-xl text-gold-400">
               {recipe.strCategory} • {recipe.strArea}
-
-              {recipe.strCountry && (
-                <p className="text-cream text-xl">
-                  Country :{" "}
-                  <span className="text-gold-500">{recipe.strCountry}</span>
-                </p>
-              )}
-
-              {recipe.strTags && (
-                <div className="flex gap-1">
-                  <p className="text-cream">🏷️ Tags :</p>
-
-                  <div className="flex gap-2">
-                    {recipe.strTags.split(",").map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              )}
             </p>
-          </h1>
+
+            {recipe.strCountry && (
+              <p className="mt-3 text-xl text-cream">
+                Country:{" "}
+                <span className="text-gold-500">
+                  {recipe.strCountry}
+                </span>
+              </p>
+            )}
+
+            {recipe.strTags && (
+              <div className="mt-3 flex gap-2">
+                <span className="text-cream">🏷️ Tags:</span>
+
+                <div className="flex gap-2">
+                  {recipe.strTags.split(",").map((tag) => (
+                    <span key={tag} className="text-gold-400">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* This section shows all the ingredients needed for the recipe. */}
