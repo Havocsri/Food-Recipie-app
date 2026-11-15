@@ -13,9 +13,12 @@ const SearchPage = () => {
     // This helps us move to another page when a recipe card is clicked.
     const navigate = useNavigate();
 
-    // This keeps the list of favorite recipe IDs.
-    const [Favorite, setFavorite] = useState([]);
+    // Load saved favorite recipes from localStorage 
+    const [Favorite, setFavorite] = useState(() => {
+        const savedFavorites = localStorage.getItem("favorites");
 
+        return savedFavorites ? JSON.parse(savedFavorites) : [];
+    });
     // These are used for the category and ingredient filters.
     const [selectedCategory, setSelectedCategory] = useState("");
     const [categories, setCategories] = useState([]);
@@ -59,14 +62,31 @@ const SearchPage = () => {
     }, [query]);
 
 
-    // This function adds or removes a recipe from favorite list.
-    // It also stops the click from opening the recipe page when heart button is clicked.
-    const toggleFavorite = (event, id) => {
+    // This function adds or removes a recipe from favorites.
+    const toggleFavorite = (event, recipe) => {
         event.stopPropagation();
-        setFavorite((prev) =>
-            prev.includes(id) ? prev.filter((favoriteId) => favoriteId != id) : [...prev, id]
-        );
+
+        setFavorite((prev) => {
+            const alreadyExists = prev.some(
+                (item) => item.idMeal === recipe.idMeal
+            );
+
+            if (alreadyExists) {
+                return prev.filter(
+                    (item) => item.idMeal !== recipe.idMeal
+                );
+            }
+
+            return [...prev, recipe];
+        });
     };
+
+
+    // Save favorites to localStorage whenever the favorites list changes.
+    useEffect(() => {
+        localStorage.setItem("favorites", JSON.stringify(Favorite));
+    }, [Favorite]);
+
 
     // This function loads recipes by selected category.
     const handleCategory = async (category) => {
@@ -208,12 +228,12 @@ const SearchPage = () => {
                             key={ingredient}
                             onClick={() => handleIngredient(ingredient)}
                             className={`mt-3 block cursor-pointer transition ${selectedIngredient === ingredient
+                                ? "text-ink-900 bg-gold-500 rounded-full px-3"
+                                : !selectedIngredient &&
+                                    !selectedCategory &&
+                                    query?.toLowerCase() === ingredient.toLowerCase()
                                     ? "text-ink-900 bg-gold-500 rounded-full px-3"
-                                    : !selectedIngredient &&
-                                        !selectedCategory &&
-                                        query?.toLowerCase() === ingredient.toLowerCase()
-                                        ? "text-ink-900 bg-gold-500 rounded-full px-3"
-                                        : "text-cream transition hover:translate-y-1"
+                                    : "text-cream transition hover:translate-y-1"
                                 }`}
                         >
                             {ingredient}
@@ -263,10 +283,10 @@ const SearchPage = () => {
                                 />
 
                                 <button
-                                    onClick={(event) => toggleFavorite(event, recipe.idMeal)}
+                                    onClick={(event) => toggleFavorite(event, recipe)}
                                     className="absolute right-3 top-3 rounded-full bg-cream cursor-pointer p-3 text-xl text-ink-900 shadow-lg"
                                 >
-                                    {Favorite.includes(recipe.idMeal) ? (
+                                    {Favorite.includes(recipe) ? (
                                         <FaHeart className="text-red-500" />
                                     ) : (
                                         <FaRegHeart />
