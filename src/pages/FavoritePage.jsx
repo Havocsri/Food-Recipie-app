@@ -1,31 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
 
 const Favorites = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [favorites, setFavorites] = useState([]);
 
-  // Get saved favorite recipes from localStorage
-  const [favorites, setFavorites] = useState(() => {
-    const savedFavorites = localStorage.getItem("favorites");
-
-    return savedFavorites ? JSON.parse(savedFavorites) : [];
-  });
+   
+  // Load saved favorites from localStorage when the page first loads.
+  useEffect(() => {
+    try {
+      const savedFavorites = localStorage.getItem("favorites");
+        setFavorites(
+        savedFavorites ? JSON.parse(savedFavorites) : []
+      );
+    } catch {
+      setError("Failed to load favorites");
+    }
+  }, []);
 
   // Remove a recipe from favorites
   const removeFavorite = (event, id) => {
     event.stopPropagation();
+    try {
+        // throw new Error("Test error"); error testing 
+      const updatedFavorites = favorites.filter(
+        (recipe) => recipe.idMeal != id
+      );
 
-    const updatedFavorites = favorites.filter(
-      (recipe) => recipe.idMeal != id
-    );
+      setFavorites(updatedFavorites);
 
-    setFavorites(updatedFavorites);
-
-    localStorage.setItem(
-      "favorites",
-      JSON.stringify(updatedFavorites)
-    );
+      localStorage.setItem(
+        "favorites",
+        JSON.stringify(updatedFavorites)
+      );
+    } catch (error) {
+      console.error("Failed to remove favorite:", error);
+      setError("Failed to remove favorite recipe");
+    }
   };
 
   return (
@@ -33,6 +46,12 @@ const Favorites = () => {
       <h1 className="text-center text-3xl font-bold">
         My <span className="text-gold-500">Favorites</span>
       </h1>
+      {/* Error message */}
+      {error && (
+        <p className="mt-6 text-center text-red-500">
+          {error}
+        </p>
+      )}
 
       {favorites.length === 0 ? (
         <p className="mt-10 text-center text-xl text-cream">
