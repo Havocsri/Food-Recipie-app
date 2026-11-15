@@ -7,6 +7,7 @@ import RecipePage from "./pages/RecipePage"
 import RecipeDetails from "./pages/RecipeDetails";
 import Favorites from "./pages/FavoritePage"
 import SearchPage from "./pages/SearchPage";
+import ScrollToTop from "./Components/ScrollToTop";
 
 
 
@@ -16,6 +17,7 @@ function App() {
   return (
     <>
       <NavBar />
+      <ScrollToTop/>
       <Routes>
         {/* Home Page */}
         <Route path="/" element={<Home />} />
