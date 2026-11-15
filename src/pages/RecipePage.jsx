@@ -13,8 +13,12 @@ const RecipePage = () => {
   // This is used to move to another page when a recipe card is clicked.
   const navigate = useNavigate();
 
-  // This stores the list of favorite recipe IDs.
-  const [Favorite, setFavorite] = useState([]);
+  // Load saved favorite recipes from localStorage 
+  const [Favorite, setFavorite] = useState(() => {
+    const savedFavorites = localStorage.getItem("favorites");
+
+    return savedFavorites ? JSON.parse(savedFavorites) : [];
+  });
 
   const [loading, setLoading] = useState(true);
 
@@ -61,19 +65,36 @@ const RecipePage = () => {
   }, [name]);
 
   // This function adds or removes a recipe from favorites.
-  const toggleFavorite = (event, id) => {
+  const toggleFavorite = (event, recipe) => {
     event.stopPropagation();
-    setFavorite((prev) =>
-      prev.includes(id) ? prev.filter((favoriteId) => favoriteId != id) : [...prev, id]
-    );
+
+    setFavorite((prev) => {
+      const alreadyExists = prev.some(
+        (item) => item.idMeal === recipe.idMeal
+      );
+
+      if (alreadyExists) {
+        return prev.filter(
+          (item) => item.idMeal !== recipe.idMeal
+        );
+      }
+
+      return [...prev, recipe];
+    });
   };
 
-       // If data is still loading, show a loading animation.
+   // Save favorites to localStorage whenever the favorites list changes.
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(Favorite));
+  }, [Favorite]);
+
+
+  // If data is still loading, show a loading animation.
   if (loading) {
     return (
-       <div className=" h-100 flex items-center justify-center bg-ink-900">
+      <div className=" h-100 flex items-center justify-center bg-ink-900">
         <div className="h-12 w-12 animate-spin rounded-full border-4 border-gold-500 border-t-transparent"></div>
-    </div>
+      </div>
     );
   }
 
@@ -108,12 +129,14 @@ const RecipePage = () => {
                   className="h-48 w-full object-cover transition duration-300 group-hover:scale-103"
                 />
 
-                {/* Favorite button for each recipe card */}
+                {/* This button adds the recipe to favorites or removes */}
                 <button
-                  onClick={(event) => toggleFavorite(event, recipe.idMeal)}
+                  onClick={(event) => toggleFavorite(event, recipe)}
                   className="absolute right-3 top-3 rounded-full bg-cream cursor-pointer p-3 text-xl text-ink-900 shadow-lg"
                 >
-                  {Favorite.includes(recipe.idMeal) ? (
+                  {Favorite.some(
+                    (item) => item.idMeal === recipe.idMeal
+                  ) ? (
                     <FaHeart className="text-red-500" />
                   ) : (
                     <FaRegHeart />
@@ -132,7 +155,7 @@ const RecipePage = () => {
         </div>
       </div>
     </section>
-    
+
   );
 };
 

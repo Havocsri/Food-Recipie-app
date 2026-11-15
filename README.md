@@ -89,6 +89,12 @@ A spinner is shown until the data is ready, so the user knows the page is still 
 
 The app handles API errors safely. If a request fails, the user sees a clear error message instead of a broken page. Loading states are also shown while data is being fetched.
 
+## Favorites
+
+Users can add or remove recipes from their favorites using the heart button.
+Favorite recipes are saved in the browser's localStorage and remain available
+after the page is refreshed.
+
 
 ## Installation
 
