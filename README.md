@@ -95,6 +95,8 @@ Users can add or remove recipes from their favorites using the heart button.
 Favorite recipes are saved in the browser's localStorage and remain available
 after the page is refreshed.
 
+## Responsive Screen 
+- Responsive navigation bar, hero section, and DisplayFoods section for mobile, tablet, and desktop screens.
 
 ## Installation
 
