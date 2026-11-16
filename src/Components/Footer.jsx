@@ -1,18 +1,19 @@
+
 import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className=" border-t border-ink-700 bg-ink-900  text-cream">
+    <footer className="border-t border-ink-700 bg-ink-900 text-cream">
 
-      <div className="mx-auto grid max-w-8xl grid-cols-1 gap-10 px-6 py-12 md:grid-cols-3 ">
+      <div className="mx-auto grid max-w-8xl grid-cols-1 gap-8 px-5 py-10 sm:px-6 sm:py-12 md:grid-cols-3 md:gap-8 lg:gap-10">
 
         {/* About */}
         <div>
-          <h2 className="text-2xl font-bold">
+          <h2 className="text-xl font-bold sm:text-2xl">
             Recipe <span className="text-gold-500">Explorer</span>
           </h2>
 
-          <p className="mt-4 leading-7 text-muted">
+          <p className="mt-3 text-sm leading-7 text-muted sm:mt-4 sm:text-base">
             Discover delicious recipes from around the world.
             Search your favorite meals, explore categories and
             learn how to cook amazing dishes.
@@ -21,11 +22,11 @@ const Footer = () => {
 
         {/* Quick Links */}
         <div>
-          <h3 className="text-lg font-semibold text-gold-500">
+          <h3 className="text-base font-semibold text-gold-500 sm:text-lg">
             Quick Links
           </h3>
 
-          <div className="mt-4 flex flex-col gap-3 text-muted">
+          <div className="mt-3 flex flex-col gap-3 text-sm text-muted sm:mt-4 sm:text-base">
 
             <Link
               to="/"
@@ -53,15 +54,15 @@ const Footer = () => {
 
         {/* Features */}
         <div>
-          <h3 className="text-lg font-semibold text-gold-500">
+          <h3 className="text-base font-semibold text-gold-500 sm:text-lg">
             Explore Recipes
           </h3>
 
-          <ul className="mt-4 space-y-3 text-muted">
-            <li> Search delicious recipes</li>
-            <li> Explore food categories</li>
+          <ul className="mt-3 space-y-3 text-sm text-muted sm:mt-4 sm:text-base">
+            <li>Search delicious recipes</li>
+            <li>Explore food categories</li>
             <li>View ingredients and instructions</li>
-            <li> Watch recipe videos</li>
+            <li>Watch recipe videos</li>
           </ul>
         </div>
 
@@ -70,7 +71,7 @@ const Footer = () => {
       {/* Bottom */}
       <div className="border-t border-ink-700">
 
-        <div className="mx-auto flex max-w-7xl justify-center px-6 py-5 text-center text-sm text-muted">
+        <div className="mx-auto flex max-w-7xl justify-center px-4 py-4 text-center text-xs text-muted sm:px-6 sm:py-5 sm:text-sm">
 
           © 2026 Recipe Explorer • Made for food lovers
 
