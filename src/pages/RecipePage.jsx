@@ -51,9 +51,9 @@ const RecipePage = () => {
         // If there are no meals, keep the array empty.
         setRecipes(data.meals || []);
         setLoading(false);
-      } catch {
-        if (error.name != "AbortError") {
-          setError(error.message);
+      } catch(err) {
+        if (err.name != "AbortError") {
+          setError(err.message);
           setLoading(false);
         }
       }

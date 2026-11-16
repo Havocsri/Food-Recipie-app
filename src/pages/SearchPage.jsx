@@ -281,7 +281,7 @@ const SearchPage = () => {
                                     src={recipe.strMealThumb}
                                     className="h-48 w-full object-cover"
                                 />
-
+                                {/* Adds or removes this recipe from favorites without opening its details. */}
                                 <button
                                     onClick={(event) => toggleFavorite(event, recipe)}
                                     className="absolute right-3 top-3 rounded-full bg-cream cursor-pointer p-3 text-xl text-ink-900 shadow-lg"
