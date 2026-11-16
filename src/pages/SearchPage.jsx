@@ -286,7 +286,9 @@ const SearchPage = () => {
                                     onClick={(event) => toggleFavorite(event, recipe)}
                                     className="absolute right-3 top-3 rounded-full bg-cream cursor-pointer p-3 text-xl text-ink-900 shadow-lg"
                                 >
-                                    {Favorite.includes(recipe) ? (
+                                    {Favorite.some(
+                                        (item) => item.idMeal === recipe.idMeal
+                                    ) ? (
                                         <FaHeart className="text-red-500" />
                                     ) : (
                                         <FaRegHeart />
