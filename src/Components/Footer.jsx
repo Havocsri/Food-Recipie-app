@@ -57,7 +57,7 @@ const Footer = () => {
           <h3 className="text-base font-semibold text-gold-500 sm:text-lg">
             Explore Recipes
           </h3>
-
+           {/* Showcase text only; these items are not links. */}
           <ul className="mt-3 space-y-3 text-sm text-muted sm:mt-4 sm:text-base">
             <li>Search delicious recipes</li>
             <li>Explore food categories</li>

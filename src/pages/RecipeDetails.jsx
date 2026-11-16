@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams ,useNavigate} from "react-router-dom";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 const RecipeDetails = () => {
   // This gets the recipe id from the URL.
   const { id } = useParams();
-
+const navigate = useNavigate();
   // This stores the selected recipe details.
   const [recipe, setRecipe] = useState(null);
 
@@ -96,8 +96,14 @@ const RecipeDetails = () => {
   return (
     <section className="min-h-screen bg-ink-900 px-6 py-12 text-cream">
       <div className="mx-auto max-w-8xl">
+         {/* Navigates back to the previous page. */}
+        <button
+           onClick={() => navigate(-1)}
+           className="mb-6 inline-flex items-center gap-2 rounded-lg bg-gold-500 px-4 py-2 text-sm font-bold  text-ink-900 transition hover:translate-y-0.5 hover:bg-gold-400">
+               ← Back to Recipes
+        </button>
         <div className="grid grid-cols-1 gap-10 px-6 md:grid-cols-2 md:items-center">
-          <div className="relative">
+           <div className="relative">
             {/* This is the big recipe image on the left side. */}
             <img
               src={recipe.strMealThumb}
@@ -125,7 +131,8 @@ const RecipeDetails = () => {
             <h1 className="mb-5 text-3xl font-bold md:text-5xl">
               {recipe.strMeal}
             </h1>
-          <div className="flex items-center gap-4">
+
+             <div className="flex items-center gap-4">
             <p className="text-xl text-gold-400 mt-3">
               {recipe.strCategory} • {recipe.strArea}
             </p>

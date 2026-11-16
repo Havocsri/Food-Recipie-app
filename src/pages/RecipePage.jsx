@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 
+
 const RecipePage = () => {
   // This gets the category name from the URL.
   // Example: /recipe/chicken -> name = "chicken"
@@ -102,11 +103,19 @@ const RecipePage = () => {
   return (
     <section className="min-h-screen bg-ink-900 px-6 py-12 text-cream">
       <div className="mx-auto max-w-8xl">
-        {/* Title of the page showing the selected category name */}
-        <h1 className="text-3xl flex gap-3 justify-center font-bold md:text-5xl">
+         {/* Navigates back to the previous page. */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center">
+          <button
+           onClick={() => navigate(-1)}
+           className="justify-self-start rounded-lg bg-gold-500 px-2 lg:px-4 py-2 text-sm font-bold  text-ink-900 transition hover:translate-y-0.5 hover:bg-gold-400">
+               ← Back to Categories
+          </button>
+         {/* Title of the page showing the selected category name */}
+         <h1 className="text-3xl flex gap-3 sm:mt-3 font-bold md:text-5xl">
           {name}
-          <span className="text-gold-500">Recipes</span>
-        </h1>
+           <span className="text-gold-500">Recipes</span>
+         </h1>
+       </div>
 
         {/* Small subtitle under the heading */}
         <p className="mt-3 text-xl md:text-3xl flex justify-center text-muted">
