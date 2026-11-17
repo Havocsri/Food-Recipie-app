@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
@@ -19,6 +20,7 @@ const SearchPage = () => {
 
         return savedFavorites ? JSON.parse(savedFavorites) : [];
     });
+
     // These are used for the category and ingredient filters.
     const [selectedCategory, setSelectedCategory] = useState("");
     const [categories, setCategories] = useState([]);
@@ -42,7 +44,6 @@ const SearchPage = () => {
                 const response = await fetch(
                     `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`
                 );
-
 
                 if (!response.ok) {
                     throw new Error("Failed to search recipes");
@@ -112,6 +113,7 @@ const SearchPage = () => {
         }
     };
 
+
     // This runs once when the page loads.
     // It gets all category names from the API.
     useEffect(() => {
@@ -124,7 +126,6 @@ const SearchPage = () => {
                 if (!response.ok) {
                     throw new Error("Failed to load categories");
                 }
-
 
                 const data = await response.json();
                 setCategories(data.meals || []);
@@ -165,7 +166,6 @@ const SearchPage = () => {
                 throw new Error("Failed to load ingredient recipes");
             }
 
-
             const data = await response.json();
 
             setRecipes(data.meals || []);
@@ -182,70 +182,77 @@ const SearchPage = () => {
     // If data is still loading, show a loading animation.
     if (loading) {
         return (
-            <div className=" h-100 flex items-center justify-center bg-ink-900">
+            <div className="h-100 flex items-center justify-center bg-ink-900">
                 <div className="h-12 w-12 animate-spin rounded-full border-4 border-gold-500 border-t-transparent"></div>
             </div>
         );
     }
 
     return (
-        <div className="mx-auto flex max-w-8xl bg-ink-900 gap-8 px-7 py-8">
+        <div className="mx-auto flex max-w-8xl flex-col gap-5 bg-ink-900 px-3 py-5 sm:px-6 sm:py-8 lg:flex-row lg:gap-8 lg:px-7">
+
             {/* LEFT SIDE - FILTER */}
             {/* This part shows the category and ingredient filters on the left side. */}
-            <aside className="w-64 rounded-xl text-xl p-10">
-                <h2 className="text-2xl font-bold bg-ink-800 rounded-full px-3 py-1 inline text-cream">
+            <aside className="w-full min-w-0 rounded-xl p-3 text-base sm:p-5 lg:w-64 lg:shrink-0 lg:p-10 lg:text-xl">
+
+                <h2 className="inline rounded-full bg-ink-800 px-3 py-1 text-xl font-bold text-cream sm:text-2xl">
                     Filters :
                 </h2>
 
-                <div className="mt-6">
-                    <h3 className="text-3xl font-semibold text-gold-500">
+                <div className="mt-4 sm:mt-5 lg:mt-6">
+                    <h3 className="text-2xl font-semibold text-gold-500 sm:text-3xl">
                         Categories
                     </h3>
 
-                    {categories.map((category) => (
-                        <button
-                            key={category.strCategory}
-                            onClick={() => handleCategory(category.strCategory)}
-                            className={`mt-3 block cursor-pointer transition ${selectedCategory == category.strCategory ? "text-ink-900 bg-gold-500 rounded-full px-3"
-                                : !selectedCategory &&
-                                    !selectedIngredient && query?.toLowerCase() === category.strCategory.toLowerCase()
-                                    ? "text-ink-900 bg-gold-500 rounded-full px-3"
-                                    : "text-cream transition hover:translate-y-1"
-                                }`}
-                        >
-                            {category.strCategory}
-                        </button>
-                    ))}
+                    <div className="mt-2 flex gap-3 overflow-x-auto whitespace-nowrap pb-3 lg:mt-3 lg:flex-col lg:items-start lg:gap-0 lg:overflow-visible lg:pb-0">
+                        {categories.map((category) => (
+                            <button
+                                key={category.strCategory}
+                                onClick={() => handleCategory(category.strCategory)}
+                                className={`shrink-0 cursor-pointer transition lg:mt-3 lg:block ${selectedCategory == category.strCategory ? "text-ink-900 bg-gold-500 rounded-full px-3"
+                                    : !selectedCategory &&
+                                        !selectedIngredient && query?.toLowerCase() === category.strCategory.toLowerCase()
+                                        ? "text-ink-900 bg-gold-500 rounded-full px-3"
+                                        : "text-cream transition hover:translate-y-1"
+                                    }`}
+                            >
+                                {category.strCategory}
+                            </button>
+                        ))}
+                    </div>
                 </div>
 
-                <div className="mt-8">
-                    <h3 className="text-3xl font-semibold text-gold-500">
+                <div className="mt-3 sm:mt-5 lg:mt-8">
+                    <h3 className="text-2xl font-semibold text-gold-500 sm:text-3xl">
                         Ingredients
                     </h3>
 
-                    {ingredientList.map((ingredient) => (
-                        <button
-                            key={ingredient}
-                            onClick={() => handleIngredient(ingredient)}
-                            className={`mt-3 block cursor-pointer transition ${selectedIngredient === ingredient
-                                ? "text-ink-900 bg-gold-500 rounded-full px-3"
-                                : !selectedIngredient &&
-                                    !selectedCategory &&
-                                    query?.toLowerCase() === ingredient.toLowerCase()
+                    <div className="mt-2 flex gap-3 overflow-x-auto whitespace-nowrap pb-3 lg:mt-3 lg:flex-col lg:items-start lg:gap-0 lg:overflow-visible lg:pb-0">
+                        {ingredientList.map((ingredient) => (
+                            <button
+                                key={ingredient}
+                                onClick={() => handleIngredient(ingredient)}
+                                className={`shrink-0 cursor-pointer transition lg:mt-3 lg:block ${selectedIngredient === ingredient
                                     ? "text-ink-900 bg-gold-500 rounded-full px-3"
-                                    : "text-cream transition hover:translate-y-1"
-                                }`}
-                        >
-                            {ingredient}
-                        </button>
-                    ))}
+                                    : !selectedIngredient &&
+                                        !selectedCategory &&
+                                        query?.toLowerCase() === ingredient.toLowerCase()
+                                        ? "text-ink-900 bg-gold-500 rounded-full px-3"
+                                        : "text-cream transition hover:translate-y-1"
+                                    }`}
+                            >
+                                {ingredient}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </aside>
 
             {/* RIGHT SIDE - RECIPES */}
             {/* This part shows the recipe results on the right side. */}
-            <main className="flex-1">
-                <h1 className="text-2xl text-cream font-bold">
+            <main className="min-w-0 flex-1">
+
+                <h1 className="text-xl font-bold text-cream sm:text-2xl">
                     {selectedCategory ? (
                         <>
                             Category Results for{" "}
@@ -263,28 +270,33 @@ const SearchPage = () => {
                         </>
                     )}
                 </h1>
+
                 {error ? (
-                    <p className="mt-8 text-4xl text-red-600 flex  justify-center">
+                    <p className="mt-8 flex justify-center text-center text-2xl text-red-600 sm:text-4xl">
                         {error}
                     </p>
                 ) : recipes.length == 0 ? (
-                    <p className="mt-8 text-3xl flex  justify-center text-red-600">No recipes found</p>
+                    <p className="mt-8 flex justify-center text-center text-xl text-red-600 sm:text-3xl">
+                        No recipes found
+                    </p>
                 ) : (
-                    <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:mt-6 lg:grid-cols-3">
+
                         {recipes.map((recipe) => (
                             <div
                                 key={recipe.idMeal}
                                 onClick={() => navigate(`/recipe/${recipe.idMeal}`)}
-                                className="cursor-pointer overflow-hidden rounded-xl bg-ink-900 text-cream transition hover:-translate-y-1 relative"
+                                className="relative cursor-pointer overflow-hidden rounded-xl bg-ink-900 text-cream transition hover:-translate-y-1"
                             >
                                 <img
                                     src={recipe.strMealThumb}
-                                    className="h-48 w-full object-cover"
+                                    className="h-52 w-full object-cover sm:h-48"
                                 />
+
                                 {/* Adds or removes this recipe from favorites without opening its details. */}
                                 <button
                                     onClick={(event) => toggleFavorite(event, recipe)}
-                                    className="absolute right-3 top-3 rounded-full bg-cream cursor-pointer p-3 text-xl text-ink-900 shadow-lg"
+                                    className="absolute right-3 top-3 cursor-pointer rounded-full bg-cream p-3 text-xl text-ink-900 shadow-lg"
                                 >
                                     {Favorite.some(
                                         (item) => item.idMeal === recipe.idMeal
@@ -295,7 +307,7 @@ const SearchPage = () => {
                                     )}
                                 </button>
 
-                                <div className="p-4">
+                                <div className="p-3 sm:p-4">
                                     <h2 className="font-bold">{recipe.strMeal}</h2>
 
                                     <p className="mt-2 text-sm text-gold-500">
