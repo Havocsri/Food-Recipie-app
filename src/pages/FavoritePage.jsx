@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaHeart } from "react-icons/fa";
@@ -5,28 +6,26 @@ import { FaHeart } from "react-icons/fa";
 const Favorites = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  
 
-   
   // Initialize the favorites state with recipes saved in localStorage.
- const [favorites, setFavorites] = useState(() => {
-  try {
-    const savedFavorites = localStorage.getItem("favorites");
+  const [favorites, setFavorites] = useState(() => {
+    try {
+      const savedFavorites = localStorage.getItem("favorites");
 
-    return savedFavorites
-      ? JSON.parse(savedFavorites)
-      : [];
-  } catch (error) {
-    console.error("Failed to load favorites:", error);
-    return [];
-  }
-});
+      return savedFavorites
+        ? JSON.parse(savedFavorites)
+        : [];
+    } catch (error) {
+      console.error("Failed to load favorites:", error);
+      return [];
+    }
+  });
 
   // Remove a recipe from favorites
   const removeFavorite = (event, id) => {
     event.stopPropagation();
     try {
-        // throw new Error("Test error"); error testing 
+      // throw new Error("Test error"); error testing 
       const updatedFavorites = favorites.filter(
         (recipe) => recipe.idMeal != id
       );
@@ -44,33 +43,37 @@ const Favorites = () => {
   };
 
   return (
-    <section className="min-h-screen bg-ink-900 px-6 py-12 text-cream">
-      <h1 className="text-center text-3xl font-bold">
+    <section className="min-h-screen bg-ink-900 px-4 py-8 text-cream sm:px-6 sm:py-10 lg:py-12">
+
+      <h1 className="text-center text-2xl font-bold sm:text-3xl lg:text-4xl">
         My <span className="text-gold-500">Favorites</span>
       </h1>
+
       {/* Error message */}
       {error && (
-        <p className="mt-6 text-center text-red-500">
+        <p className="mt-6 text-center text-sm text-red-500 sm:text-base">
           {error}
         </p>
       )}
 
       {favorites.length === 0 ? (
-        <p className="mt-10 text-center text-xl text-cream">
+        <p className="mt-8 text-center text-base text-cream sm:mt-10 sm:text-xl">
           Your favorite recipes will appear here ❤️
         </p>
       ) : (
-        <div className="mx-auto mt-10 grid max-w-7xl grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="mx-auto mt-7 grid max-w-7xl grid-cols-1 gap-5 sm:mt-10 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
+
           {favorites.map((recipe) => (
             <div
               key={recipe.idMeal}
               onClick={() => navigate(`/recipe/${recipe.idMeal}`)}
               className="relative cursor-pointer overflow-hidden rounded-xl bg-ink-800 transition hover:-translate-y-1"
             >
+
               <img
                 src={recipe.strMealThumb}
                 alt={recipe.strMeal}
-                className="h-48 w-full object-cover"
+                className="h-52 w-full object-cover sm:h-48"
               />
 
               {/* Remove from favorites */}
@@ -78,14 +81,17 @@ const Favorites = () => {
                 onClick={(event) =>
                   removeFavorite(event, recipe.idMeal)
                 }
-                className="absolute right-3 top-3 rounded-full bg-cream p-3 text-xl text-red-500 cursor-pointer"
+                className="absolute right-3 top-3 cursor-pointer rounded-full bg-cream p-3 text-xl text-red-500"
               >
                 <FaHeart />
               </button>
 
-              <div className="p-4">
-                <h2 className="font-bold">{recipe.strMeal}</h2>
+              <div className="p-3 sm:p-4">
+                <h2 className="text-center text-base font-bold sm:text-lg">
+                  {recipe.strMeal}
+                </h2>
               </div>
+
             </div>
           ))}
         </div>
