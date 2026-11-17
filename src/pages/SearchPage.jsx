@@ -194,6 +194,11 @@ const SearchPage = () => {
             {/* LEFT SIDE - FILTER */}
             {/* This part shows the category and ingredient filters on the left side. */}
             <aside className="w-full min-w-0 rounded-xl p-3 text-base sm:p-5 lg:w-64 lg:shrink-0 lg:p-10 lg:text-xl">
+                <button
+                    onClick={() => navigate(-1)}
+                    className="mb-6 inline-flex items-center gap-2 rounded-lg bg-gold-500 px-3 py-2 text-sm font-bold  text-ink-900 transition hover:translate-y-0.5 hover:bg-gold-400">
+                    ← Back to Catogories
+                </button>
 
                 <h2 className="inline rounded-full bg-ink-800 px-3 py-1 text-xl font-bold text-cream sm:text-2xl">
                     Filters :
