@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
@@ -51,9 +52,9 @@ const RecipePage = () => {
         // If there are no meals, keep the array empty.
         setRecipes(data.meals || []);
         setLoading(false);
-      } catch(err) {
-        if (err.name != "AbortError") {
-          setError(err.message);
+      } catch {
+        if (error.name !== "AbortError") {
+          setError(error.message);
           setLoading(false);
         }
       }
@@ -84,7 +85,7 @@ const RecipePage = () => {
     });
   };
 
-   // Save favorites to localStorage whenever the favorites list changes.
+  // Save favorites to localStorage whenever the favorites list changes.
   useEffect(() => {
     localStorage.setItem("favorites", JSON.stringify(Favorite));
   }, [Favorite]);
@@ -93,7 +94,7 @@ const RecipePage = () => {
   // If data is still loading, show a loading animation.
   if (loading) {
     return (
-      <div className=" h-100 flex items-center justify-center bg-ink-900">
+      <div className="flex h-100 items-center justify-center bg-ink-900">
         <div className="h-12 w-12 animate-spin rounded-full border-4 border-gold-500 border-t-transparent"></div>
       </div>
     );
@@ -101,47 +102,55 @@ const RecipePage = () => {
 
 
   return (
-    <section className="min-h-screen bg-ink-900 px-6 py-12 text-cream">
+    <section className="min-h-screen bg-ink-900 px-4 py-8 text-cream sm:px-6 sm:py-10 lg:px-6 lg:py-12">
       <div className="mx-auto max-w-8xl">
-         {/* Navigates back to the previous page. */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center">
+
+        {/* Navigates back to the previous page. */}
+        <div className="grid grid-cols-1 items-center gap-4 sm:grid-cols-2 lg:grid-cols-3">
+
           <button
-           onClick={() => navigate(-1)}
-           className="justify-self-start rounded-lg bg-gold-500 px-2 lg:px-4 py-2 text-sm font-bold  text-ink-900 transition hover:translate-y-0.5 hover:bg-gold-400">
-               ← Back to Categories
+            onClick={() => navigate(-1)}
+            className="justify-self-start rounded-lg bg-gold-500 px-3 py-2 text-xs font-bold text-ink-900 transition hover:translate-y-0.5 hover:bg-gold-400 sm:px-4 sm:text-sm"
+          >
+            ← Back to Categories
           </button>
-         {/* Title of the page showing the selected category name */}
-         <h1 className="text-3xl flex gap-3 sm:mt-3 font-bold md:text-5xl">
-          {name}
-           <span className="text-gold-500">Recipes</span>
-         </h1>
-       </div>
+
+          {/* Title of the page showing the selected category name */}
+          <h1 className="flex flex-wrap gap-2 text-2xl font-bold sm:mt-3 sm:text-3xl md:text-4xl lg:text-5xl">
+            {name}
+            <span className="text-gold-500">Recipes</span>
+          </h1>
+
+        </div>
 
         {/* Small subtitle under the heading */}
-        <p className="mt-3 text-xl md:text-3xl flex justify-center text-muted">
+        <p className="mt-3 flex justify-center text-center text-base text-muted sm:text-xl md:text-2xl lg:text-3xl">
           Explore delicious {name} recipes
         </p>
 
         {/* This part shows all the recipe cards in a grid */}
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="mt-7 grid grid-cols-1 gap-5 sm:mt-10 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
+
           {recipes.map((recipe) => (
             <div
               key={recipe.idMeal}
               onClick={() => navigate(`/recipe/${recipe.idMeal}`)}
-              className="overflow-hidden rounded-xl bg-ink-900 transition duration-300 border border-ink-900 hover:border-gold-400 hover:-translate-y-1"
+              className="cursor-pointer overflow-hidden rounded-xl border border-ink-900 bg-ink-900 transition duration-300 hover:-translate-y-1 hover:border-gold-400"
             >
+
               <div className="relative">
+
                 {/* Recipe image displayed on each card */}
                 <img
                   src={recipe.strMealThumb}
                   alt={recipe.strMeal}
-                  className="h-48 w-full object-cover transition duration-300 group-hover:scale-103"
+                  className="h-52 w-full object-cover transition duration-300 group-hover:scale-103 sm:h-48"
                 />
 
                 {/* This button adds the recipe to favorites or removes */}
                 <button
                   onClick={(event) => toggleFavorite(event, recipe)}
-                  className="absolute right-3 top-3 rounded-full bg-cream cursor-pointer p-3 text-xl text-ink-900 shadow-lg"
+                  className="absolute right-3 top-3 cursor-pointer rounded-full bg-cream p-3 text-xl text-ink-900 shadow-lg"
                 >
                   {Favorite.some(
                     (item) => item.idMeal === recipe.idMeal
@@ -151,16 +160,19 @@ const RecipePage = () => {
                     <FaRegHeart />
                   )}
                 </button>
+
               </div>
 
               {/* Recipe name shown below the image */}
-              <div className="p-4">
-                <h2 className="text-lg flex justify-center items-center font-semibold">
+              <div className="p-3 sm:p-4">
+                <h2 className="flex items-center justify-center text-base font-semibold text-center sm:text-lg">
                   {recipe.strMeal}
                 </h2>
               </div>
+
             </div>
           ))}
+
         </div>
       </div>
     </section>
